@@ -52,9 +52,3 @@ function reloadGlass(amount, color) {
 	document.getElementById("color").value = color;
 	updateGlass();
 }
-
-function updateUser(name, email, token) {
-	document.getElementById('user').innerHTML = "<b>" + name + "<br>" + email + "</b>"; 
-	document.getElementById('euid').value = email;
-	document.getElementById('token').value = token;
-}

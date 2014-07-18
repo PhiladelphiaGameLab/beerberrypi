@@ -1,13 +1,11 @@
+<?php include 'header.php'; ?>
+
 <html>
 	<head>
+		<title>BeerBerry Pi - Login</title>
 		<link rel="stylesheet" type="text/css" href="theme.css">
 	</head>
 	<body>
-		
-		<div class="background">
-    		<img src="banner_small.gif" alt="Banner Image"/>
-		</div>
-
 		<?php
       		$currentDomain = $_SERVER['HTTP_HOST'];
       		//start the session
@@ -32,9 +30,8 @@
         		$call = 'http://' . $currentDomain . '/index.php';
         		$scope = 'email%20profile%20https://www.googleapis.com/auth/admin.directory.user';
         		$url = "https://accounts.google.com/o/oauth2/auth?state=$state&scope=$scope&redirect_uri=$call&response_type=code&client_id=$cli_id&approval_prompt=force&access_type=offline";
-        		//echo "<a href=$url>Log In With Google</a>";
         		echo 	"<div style=\"width: 200px; height: 46px; position: absolute; top:0; bottom: 0; left: 0; right: 0; margin: auto;\">
-        					<a href=$url class=\"login_button3\" style=\"height:46px; line-height:46px; width:200px\">Log In With Google</a>
+        					<a href=$url class=\"black_button\" style=\"height:46px; line-height:46px; width:200px\">Log In With Google</a>
 						</div>";
       		}
       		else if(isset($_GET['code'])) {
@@ -63,9 +60,6 @@
 
 	        	$access_obj = json_decode($result);
 	        	$_SESSION['access'] = $access_obj->{'access_token'};
-	        	
-	        	//get the refresh token, used in refresh.php -----------------------------------------------------------
-	        	//$_SESSION['refresh'] = $access_obj->{'refresh_token'};
 
 		        //get the user's information from the access_token
 		        $ac_tok = $_SESSION['access'];
@@ -74,6 +68,7 @@
 		        $get = json_decode($getResponse);
 		        $_SESSION['name'] = $get->{'name'};
 		        $_SESSION['email'] = $get->{'email'};
+		        $_SESSION['token'] = $get->{'id'};
 
 		        //redirect to this url with the params state=done
 		        echo "<script> window.location ='\?state=done' </script>";
@@ -85,4 +80,5 @@
         		die();
       		}
       	?>
+    </body>
 </html>
