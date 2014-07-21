@@ -4,8 +4,8 @@
     <link rel="stylesheet" type="text/css" href="theme.css">
 	</head>
 	<body>
-		<div class="background">
-    		<img src="banner_small.gif" alt="Banner Image"/>
+		<div id="banner">
+    		<img src="logo.gif" id="logo"/>
     		<div class="text_over">
     			<p class="tight_text"1>
     				<?php 

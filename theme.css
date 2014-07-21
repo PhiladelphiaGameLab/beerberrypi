@@ -2,11 +2,19 @@ body {
 		font-family: Verdana, Geneva, sans-serif;
 }
 
-.background {
-	display: inline-block;
-	position: relative;
-	left: 0px;
- 	z-index: 1;
+#banner {
+    background-image:url(banner_small.gif);
+    background-size: 100% 100%;
+    height: 220px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+#logo {
+	position: absolute;
+	margin-right: auto;
+	margin-left: 0%;
 }
 
 .text_over {
@@ -14,7 +22,8 @@ body {
 	text-align:right;
 	font-family: Verdana, Geneva, sans-serif;
 	position: absolute;
-	margin-right: 0;
+	margin-right: 0%;
+	margin-left: auto;
 	right: 10px;
 	top: 90px;
 	z-index: 2;
