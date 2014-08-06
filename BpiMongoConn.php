@@ -28,7 +28,6 @@
 			$this->user = $user;
 			$query = array('user' => $user);
 			if (NULL == $this->COLLECTION->findOne($query)) {
-				echo "Adding user";
 				if(!$this->add_user()) {
 					echo "\nError communicating with server to add user";
 					return;
@@ -57,9 +56,12 @@
 		 * and sends it from the user account to the DRINK_LOG.
 		 */
 		public function drink($amt) {
-			$record_id = $this->split_time(-$amt);
-			$this->DRINK_LOG = $this->COLLECTION->findOne(array('user' => 'DRINK_LOG'));
-			$this->log_time_transaction($record_id, $this->DRINK_LOG);
+			$record_id = $this->split_time($amt);
+			if(NULL != $record_id) {
+				$this->DRINK_LOG = $this->COLLECTION->findOne(array('user' => 'DRINK_LOG'));
+				$this->log_time_transaction($record_id, $this->DRINK_LOG);
+				return true;
+			} else return false;
 		}
 
 		/*
@@ -71,6 +73,14 @@
 			} else {
 				$this->subtract_time($amt);
 			}	
+			return true;
+		}
+
+		/*
+		 * Returns the user account's time balance.
+		 */
+		public function get_time_balance() {
+			return $this->account['time_balance'];
 		}
 
 		/*
@@ -82,7 +92,7 @@
 			$this->COLLECTION->insert($record);
 			$this->TIME_GENERATOR = $this->COLLECTION->findOne(array('user' => 'TIME_GENERATOR'));
 			$this->TIME_LOG = $this->COLLECTION->findOne(array('user' => 'TIME_LOG'));
-			file_get_contents(BpiMongoConn::$TRANS_SERVER . "method=addItemToSubAccount&subId0=" 
+			$result = file_get_contents(BpiMongoConn::$TRANS_SERVER . "method=addItemToSubAccount&subId0=" 
 				. $this->TIME_GENERATOR['time_subaccount'] . "&itemId=" . $record['_id'] );
 			$this->add_time_transaction($record['_id']);
 			$this->log_time_transaction($record['_id'], $this->TIME_LOG);
@@ -104,15 +114,14 @@
 		 */
 		private function split_time($amt) {
 			if($this->account['time_balance'] < $amt) {
-				echo "Insufficient funds";
-				return NULL;
+				return NULL; //Insufficient funds
 			} else {
-				$record = array('amount' => $amt);
+				$record = array('amount' => -$amt);
 				$this->COLLECTION->insert($record);
 				$this->TIME_LOG = $this->COLLECTION->findOne(array('user' => 'TIME_LOG'));
-				file_get_contents(BpiMongoConn::$TRANS_SERVER . "method=addItemToSubAccount&subId0=" 
+				$result = file_get_contents(BpiMongoConn::$TRANS_SERVER . "method=addItemToSubAccount&subId0=" 
 					. $this->account['time_subaccount'] . "&itemId=" . $record['_id'] );
-				$this->update_balance($amt);
+				$this->update_balance(-$amt);
 				return $record['_id'];			
 			}
 		}
@@ -209,7 +218,6 @@
 				echo $message;
 				return true;
 			} else {
-				echo "success";
 				return false;
 			}
 		}

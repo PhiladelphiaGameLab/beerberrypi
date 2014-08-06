@@ -25,6 +25,7 @@ function updateAmount(change) {
 	}
 	document.getElementById('amt').value = amount;
 	document.getElementById('sub').value = "Pour\n" + amount + " oz!";
+	enableButton(amount);
 }
 
 function updateGlass() {
@@ -51,4 +52,16 @@ function reloadGlass(amount, color) {
 	document.getElementById('amt').value = amount;
 	document.getElementById("color").value = color;
 	updateGlass();
+}
+
+function enableButton(amt) {
+	balanceText = document.getElementById("bal").innerHTML;
+	balance = parseInt(balanceText);
+	//amtText = document.getElementById("amt").value;
+	//amt = parseInt(text);
+	if(balance >= amt) {
+		document.getElementById("sub").disabled = false;
+	} else {
+		document.getElementById("sub").disabled = true;
+	}
 }
