@@ -57,8 +57,6 @@ function reloadGlass(amount, color) {
 function enableButton(amt) {
 	balanceText = document.getElementById("bal").innerHTML;
 	balance = parseInt(balanceText);
-	//amtText = document.getElementById("amt").value;
-	//amt = parseInt(text);
 	if(balance >= amt) {
 		document.getElementById("sub").disabled = false;
 	} else {

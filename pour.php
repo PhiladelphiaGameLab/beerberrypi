@@ -1,6 +1,6 @@
 <?php 
 	include 'header.php'; 
-	include "BpiMongoConn.php";
+	include "TrackerMongoConn.php";
 	if (!isset($_SESSION['access'])) {
 			echo "<script> window.location = '/index.php' </script>";
         	die();
@@ -17,13 +17,13 @@
 	<body >		
 		
 		<?php 
-			$conn = new BpiMongoConn($_SESSION['email']);
+			$conn = new TrackerMongoConn($_SESSION['email']);
 			if(isset($_GET['send'])) {
 				$color = $_GET["color"];
 				$amt = $_GET["amt"];
 				$user = $_SESSION['email'];
 				$token = $_SESSION['token'];
-				$conn = new BpiMongoConn($user);
+				$conn = new TrackerMongoConn($user);
 				if($conn->drink($amt)) {
 					
 		?> 
