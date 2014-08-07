@@ -28,7 +28,7 @@
 			$query = array('user' => $user);
 			if (NULL == $this->COLLECTION->findOne($query)) {
 				if(!$this->add_user()) {
-					echo "\nError communicating with server to add user";
+					//echo "\nError communicating with server to add user";
 					return;
 				}
 			}
@@ -81,7 +81,7 @@
 		public function purchase($amt, $log_name) {
 			$log = $this->COLLECTION->findOne(array('user' => $log_name));
 			if(NULL == $log) {
-				echo "Log: " . $log_name . " not found.";
+				//echo "Log: " . $log_name . " not found.";
 				return false;
 			}
 			$record = $this->split_time(-$amt);
@@ -188,7 +188,7 @@
 		 */
 		private function update_balance($amt) {
 			$this->account['time_balance'] += $amt; 
-			echo $this->user . " updated balance: " . $this->account['time_balance'] . "<br>"; //remove ----------------------
+			//echo $this->user . " updated balance: " . $this->account['time_balance'] . "<br>";
 			$this->COLLECTION->update(array('user' => $this->user), $this->account);
 		}
 
@@ -247,7 +247,7 @@
 		private static function has_error($response, $message) {
 			$r = json_decode($response);
 			if($r->{"status"} != "success") {
-				echo $message;
+				//echo $message;
 				return true;
 			} else {
 				return false;
