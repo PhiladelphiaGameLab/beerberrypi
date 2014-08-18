@@ -106,3 +106,23 @@ td {
 	top:1px;
 }
 /* This button was generated using CSSButtonGenerator.com */
+
+/* From http://codeitdown.com/css-round-buttons/ */
+.round_button {
+    display:block;
+    width:200px;
+    height:200px;
+    line-height:200px;
+    border: 2px solid #f5f5f5;
+    border-radius: 50%;
+    color:#f5f5f5;
+    text-align:center;
+    text-decoration:none;
+    background: red;
+    box-shadow: 0 0 3px gray;
+    font-size:50px;
+    font-weight:bold;
+}
+.round-button:hover {
+    background: #262626;
+}
